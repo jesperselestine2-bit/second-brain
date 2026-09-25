@@ -1,0 +1,26 @@
+name: Shadow Desktop CI
+
+on:
+  push:
+    paths:
+      - 'shadow-desktop-ai/**'
+  pull_request:
+    paths:
+      - 'shadow-desktop-ai/**'
+
+jobs:
+  typecheck-and-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: shadow-desktop-ai
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: shadow-desktop-ai/package.json
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm run build
