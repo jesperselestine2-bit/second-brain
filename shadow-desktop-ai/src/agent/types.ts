@@ -6,9 +6,15 @@ export interface PermissionRequest {
   approved: boolean;
 }
 
+export interface ActiveWindowInfo {
+  title: string | null;
+  application: string | null;
+  available: boolean;
+}
+
 export interface ScreenContext {
   capturedAt: string;
-  activeWindow?: string;
+  activeWindow?: ActiveWindowInfo;
   cursor?: { x: number; y: number };
   imageDataUrl?: string;
 }
@@ -16,6 +22,7 @@ export interface ScreenContext {
 export interface AgentMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
+  images?: string[];
 }
 
 export interface ModelConfig {
