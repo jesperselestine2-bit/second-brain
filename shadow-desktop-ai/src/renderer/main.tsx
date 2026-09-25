@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { AgentMessage } from '../agent/types';
-import './styles.css';
 
 function App() {
   const [answer, setAnswer] = useState('');
