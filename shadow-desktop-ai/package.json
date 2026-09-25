@@ -1,6 +1,6 @@
 {
   "name": "shadow-desktop-ai",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Standalone desktop AI copilot for the user's computer",
   "main": "out/main/index.js",
@@ -20,8 +20,8 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
-    "electron-vite": "latest",
+    "electron-vite": "5.0.0",
     "typescript": "latest",
-    "vite": "latest"
+    "vite": "7.3.0"
   }
 }
