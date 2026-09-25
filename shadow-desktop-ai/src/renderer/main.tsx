@@ -15,6 +15,7 @@ function App() {
   async function refreshContext() {
     try {
       setContext(await window.shadow.getContext());
+      setError('');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not read desktop context.');
     }
@@ -54,20 +55,29 @@ function App() {
   }
 
   async function clearMemory() {
-    await window.shadow.clearHistory();
-    setMessages([]);
-    setAnswer('');
+    try {
+      await window.shadow.clearHistory();
+      setMessages([]);
+      setAnswer('');
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not clear memory.');
+    }
   }
 
   useEffect(() => {
     void refreshContext();
-    void window.shadow.getHistory().then((history) => setMessages(history.filter((m) => m.role !== 'system')));
+    void window.shadow.getHistory()
+      .then((history) => setMessages(history.filter((m) => m.role !== 'system')))
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : 'Could not load conversation history.');
+      });
     const timer = window.setInterval(() => void refreshContext(), 2000);
     return () => window.clearInterval(timer);
   }, []);
 
-  const appName = context?.activeWindow.application ?? 'Detecting…';
-  const windowTitle = context?.activeWindow.title ?? 'No active window detected';
+  const appName = context?.activeWindow?.application ?? 'Detecting…';
+  const windowTitle = context?.activeWindow?.title ?? 'No active window detected';
   const cursor = context?.cursor ? `${context.cursor.x}, ${context.cursor.y}` : '—';
 
   return (
