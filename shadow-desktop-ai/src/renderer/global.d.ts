@@ -2,6 +2,8 @@ export {};
 
 import type { AgentMessage } from '../agent/types';
 
+declare module '*.css';
+
 declare global {
   interface ShadowContext {
     capturedAt: string;
