@@ -4,7 +4,7 @@ Standalone desktop AI copilot for coding, photo editing, video editing, research
 
 ## Current stage
 
-Shadow can capture the primary desktop from the Electron main process and send the screenshot to a local Ollama vision model. The renderer reaches this capability through a context-isolated IPC bridge. Computer-control permissions remain separate and are not enabled by screen analysis.
+Shadow can capture the primary screen, read the cursor position, detect the active Linux X11 window when `xdotool` is installed, and send the screen plus desktop context to a local Ollama vision model.
 
 ## Requirements
 
@@ -13,6 +13,16 @@ Shadow can capture the primary desktop from the Electron main process and send t
 - npm
 - Ollama 0.34+
 - `llama3.2-vision:11b` installed locally
+- `xdotool` for active-window detection on X11
+
+Install the Linux active-window dependency with:
+
+```bash
+sudo apt update
+sudo apt install xdotool
+```
+
+Wayland sessions may restrict active-window inspection; screen and cursor capture remain separate from that integration.
 
 ## Run locally
 
@@ -29,7 +39,7 @@ npm run typecheck
 npm run build
 ```
 
-Ollama should be available at `http://127.0.0.1:11434`. Configure another endpoint/model through the agent configuration instead of committing secrets.
+Ollama should be available at `http://127.0.0.1:11434`.
 
 ## Current capabilities
 
@@ -39,7 +49,8 @@ Ollama should be available at `http://127.0.0.1:11434`. Configure another endpoi
 - Ollama vision image payloads
 - Primary-screen capture
 - Cursor-position capture
-- Screen-analysis IPC endpoint
+- Linux active-window context
+- Secure context-isolated IPC
 - Initial conversation memory
 - Permission scopes for future computer tools
 - CI typecheck/build workflow
@@ -52,8 +63,8 @@ Screen capture is only triggered by an explicit Analyze screen action in the cur
 
 1. Desktop shell and floating assistant
 2. Local AI connection
-3. Screen capture and vision context — current
-4. Active-window/cursor context
+3. Screen capture and vision context
+4. Active-window/cursor context — current
 5. Conversation and persistent local memory
 6. Permission-gated mouse/keyboard tools
 7. File, terminal, and browser tools
