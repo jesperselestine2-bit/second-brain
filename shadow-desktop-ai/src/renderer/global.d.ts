@@ -3,12 +3,11 @@ export {};
 import type { AgentMessage } from '../agent/types';
 
 declare module '*.css';
-
 declare global {
   interface ShadowContext {
     capturedAt: string;
     cursor?: { x: number; y: number };
-    activeWindow: {
+    activeWindow?: {
       title: string | null;
       application: string | null;
       available: boolean;
