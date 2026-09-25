@@ -1,11 +1,9 @@
-import type { AgentMessage, ModelConfig, ScreenContext } from './types';
-import { chatWithLocalModel } from './ollama';
+import type { ModelConfig, ScreenContext } from './types';
+import { analyzeImageWithLocalModel } from './ollama';
 
-function imageToMessage(screenContext: ScreenContext, prompt: string): AgentMessage {
-  return {
-    role: 'user',
-    content: `${prompt}\n\nScreen context image (data URL): ${screenContext.imageDataUrl ?? 'unavailable'}\nCursor: ${JSON.stringify(screenContext.cursor ?? null)}`,
-  };
+function dataUrlToBase64(dataUrl: string): string {
+  const comma = dataUrl.indexOf(',');
+  return comma >= 0 ? dataUrl.slice(comma + 1) : dataUrl;
 }
 
 export async function analyzeScreen(
@@ -15,14 +13,10 @@ export async function analyzeScreen(
 ): Promise<string> {
   if (!screenContext.imageDataUrl) throw new Error('No screen image is available.');
 
-  return chatWithLocalModel(
-    [
-      {
-        role: 'system',
-        content: 'You are Shadow, a desktop copilot. Analyze the supplied screen image carefully. Be concise, factual, and do not claim to have performed an action.',
-      },
-      imageToMessage(screenContext, prompt),
-    ],
+  const cursor = screenContext.cursor ? ` Cursor position: ${screenContext.cursor.x}, ${screenContext.cursor.y}.` : '';
+  return analyzeImageWithLocalModel(
+    `${prompt}${cursor} You are Shadow, a desktop copilot. Analyze only what is visible. Be concise and do not claim to have performed an action.`,
+    dataUrlToBase64(screenContext.imageDataUrl),
     config,
   );
 }
