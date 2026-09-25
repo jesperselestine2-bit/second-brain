@@ -17,8 +17,9 @@ export async function analyzeScreen(
   const cursor = screenContext.cursor
     ? `Cursor position: ${screenContext.cursor.x}, ${screenContext.cursor.y}.`
     : '';
-  const app = 'activeWindow' in screenContext
-    ? `Active application: ${screenContext.activeWindow.application ?? 'unknown'}. Active window: ${screenContext.activeWindow.title ?? 'unknown'}.`
+  const activeWindow = 'activeWindow' in screenContext ? screenContext.activeWindow : undefined;
+  const app = activeWindow
+    ? `Active application: ${activeWindow.application ?? 'unknown'}. Active window: ${activeWindow.title ?? 'unknown'}.`
     : '';
 
   return analyzeImageWithLocalModel(
