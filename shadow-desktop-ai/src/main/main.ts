@@ -1,5 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
+import { collectScreenContext } from '../agent/context';
+import { analyzeScreen } from '../agent/vision';
 
 let window: BrowserWindow | null = null;
 
@@ -14,6 +16,7 @@ function createWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
@@ -23,6 +26,11 @@ function createWindow() {
     void window.loadFile(path.join(__dirname, '../renderer/index.html'));
   }
 }
+
+ipcMain.handle('shadow:analyze-screen', async (_event, prompt?: string) => {
+  const context = await collectScreenContext();
+  return analyzeScreen(context, prompt);
+});
 
 app.whenReady().then(() => {
   createWindow();
