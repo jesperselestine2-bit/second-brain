@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
-import { collectScreenContext } from '../agent/context';
+import { collectDesktopContext } from '../agent/context';
 import { analyzeScreen } from '../agent/vision';
 
 let window: BrowserWindow | null = null;
@@ -8,9 +8,9 @@ let window: BrowserWindow | null = null;
 function createWindow() {
   window = new BrowserWindow({
     width: 820,
-    height: 520,
+    height: 620,
     minWidth: 420,
-    minHeight: 360,
+    minHeight: 420,
     backgroundColor: '#0c0f16',
     title: 'Shadow Desktop AI',
     webPreferences: {
@@ -27,8 +27,10 @@ function createWindow() {
   }
 }
 
+ipcMain.handle('shadow:get-context', async () => collectDesktopContext());
+
 ipcMain.handle('shadow:analyze-screen', async (_event, prompt?: string) => {
-  const context = await collectScreenContext();
+  const context = await collectDesktopContext();
   return analyzeScreen(context, prompt);
 });
 
