@@ -1,19 +1,26 @@
 {
   "name": "shadow-desktop-ai",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Standalone desktop AI copilot for the user's computer",
-  "main": "dist/main/main.js",
+  "main": "out/main/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit"
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "electron-vite preview"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
     "electron": "latest",
     "react": "latest",
-    "react-dom": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "electron-vite": "latest",
     "typescript": "latest",
     "vite": "latest"
   }
