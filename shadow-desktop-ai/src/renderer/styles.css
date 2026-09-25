@@ -4,49 +4,38 @@
   background: transparent;
   font-synthesis: none;
 }
-
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 420px; min-height: 100vh; background: transparent; }
-button { font: inherit; }
-
-.app-shell {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-}
-
-.assistant-card {
-  width: min(760px, calc(100vw - 40px));
-  display: flex;
-  gap: 22px;
-  padding: 28px;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 24px;
-  background: rgba(12, 15, 22, .94);
-  box-shadow: 0 24px 80px rgba(0,0,0,.45);
-  backdrop-filter: blur(24px);
-}
-
-.orb {
-  width: 54px;
-  height: 54px;
-  flex: 0 0 54px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #8b5cf6, #22d3ee);
-  color: white;
-  font-size: 22px;
-  font-weight: 800;
-}
-
-.content { min-width: 0; }
+body { margin: 0; min-width: 560px; min-height: 100vh; background: transparent; }
+button, textarea { font: inherit; }
+.app-shell { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+.assistant-card { width: min(900px, calc(100vw - 40px)); display: flex; gap: 22px; padding: 28px; border: 1px solid rgba(255,255,255,.1); border-radius: 24px; background: rgba(12, 15, 22, .96); box-shadow: 0 24px 80px rgba(0,0,0,.45); backdrop-filter: blur(24px); }
+.orb { width: 54px; height: 54px; flex: 0 0 54px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #8b5cf6, #22d3ee); color: white; font-size: 22px; font-weight: 800; }
+.content { min-width: 0; width: 100%; }
+.topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .eyebrow { font-size: 11px; letter-spacing: .18em; color: #9ca3af; font-weight: 700; }
-h1 { margin: 8px 0 8px; font-size: 28px; letter-spacing: -.03em; }
+h1 { margin: 8px 0; font-size: 28px; letter-spacing: -.03em; }
 p { margin: 0; color: #a8b0bf; line-height: 1.6; }
-.actions { display: flex; gap: 10px; margin-top: 22px; }
 button { border: 0; border-radius: 12px; padding: 11px 16px; cursor: pointer; background: #f5f7fb; color: #10131a; font-weight: 700; }
-button.secondary { background: rgba(255,255,255,.08); color: #f5f7fb; border: 1px solid rgba(255,255,255,.1); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button.secondary, button.ghost { background: rgba(255,255,255,.08); color: #f5f7fb; border: 1px solid rgba(255,255,255,.1); }
+button.ghost { padding: 8px 11px; font-size: 12px; }
+.context-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 20px 0; }
+.context-grid > div { padding: 11px; border-radius: 12px; background: rgba(255,255,255,.05); min-width: 0; }
+.context-grid span, .message-label { display: block; color: #727c8c; font-size: 9px; letter-spacing: .12em; font-weight: 800; }
+.context-grid strong { display: block; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.chat { height: 250px; overflow: auto; padding: 12px; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; background: rgba(0,0,0,.18); }
+.empty { color: #687384; display: grid; place-items: center; height: 100%; }
+.message { margin-bottom: 12px; padding: 10px 12px; border-radius: 12px; line-height: 1.5; white-space: pre-wrap; }
+.message.user { background: rgba(139,92,246,.12); margin-left: 12%; }
+.message.assistant { background: rgba(255,255,255,.05); margin-right: 8%; }
+.message-label { margin-bottom: 5px; }
+.composer { margin-top: 12px; padding: 10px; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; background: rgba(255,255,255,.03); }
+textarea { width: 100%; resize: vertical; border: 0; outline: 0; background: transparent; color: #f5f7fb; padding: 4px; line-height: 1.5; }
+textarea::placeholder { color: #667080; }
+.composer-row { display: flex; align-items: center; justify-content: space-between; margin-top: 7px; color: #7f8999; font-size: 11px; }
+.composer-row input { accent-color: #8b5cf6; }
+.actions { display: flex; gap: 10px; margin-top: 12px; }
+.answer { margin: 12px 0 0; max-height: 180px; overflow: auto; white-space: pre-wrap; color: #c8d0dc; font: inherit; line-height: 1.5; }
+.error { margin-top: 12px; color: #fca5a5; font-size: 12px; }
 .status { margin-top: 18px; color: #87909f; font-size: 12px; display: flex; align-items: center; gap: 7px; }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 12px #34d399; }
